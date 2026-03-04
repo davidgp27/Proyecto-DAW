@@ -46,7 +46,7 @@ public class StorageController {
     @GetMapping("/download({filename:.+}")
     public ResponseEntity<Resource> download(@PathVariable String fileName) throws IOException {
         Resource resource = storageService.loadAsResource(fileName);
-        // Implementar lógica con servlets para sacar más información
+        return null;
     }
     
 }

@@ -6,6 +6,7 @@ import com.jinbu.backend_jinbu.entities.User;
 
 public interface UserService {
     User getUser(Long id);
+    User getUser(String username);
     User saveUser(User user);
     void deleteUser(Long id);
     List<User> getUsers();
