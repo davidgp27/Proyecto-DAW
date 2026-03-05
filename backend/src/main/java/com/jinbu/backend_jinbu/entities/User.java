@@ -32,6 +32,10 @@ public class User {
     private String username;
 
     @NonNull
+    @Column(name = "password", nullable = false)
+    private String password;
+
+    @NonNull
     @Column(name = "groups", nullable = false)
     private String group;
 
