@@ -27,8 +27,6 @@ import lombok.Setter;
 @Entity
 @Table(name = "content_data")
 public class ContentData {
-    
-    User user;
 
     @Id
     @Column(name = "photo_id")

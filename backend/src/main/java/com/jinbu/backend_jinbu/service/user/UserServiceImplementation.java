@@ -44,6 +44,12 @@ public class UserServiceImplementation implements UserService {
         return (List<User>)userRepository.findAll();
     }
 
+    @Override
+    public void followUser(String username) {
+
+        userRepository.followByUsername(username);
+    }
+
     // Si el usuario no existe devuelve error, sino devuelve el usuario
     static User unwrapUser(Optional<User> entity, long id) {
         if (entity.isPresent()) return entity.get();
