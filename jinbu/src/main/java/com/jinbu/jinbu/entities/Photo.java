@@ -3,13 +3,23 @@ package com.jinbu.jinbu.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Date;
+
 @Getter
 @Setter
-@RequiredArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "photos")
 public class Photo {
+
+    public Photo(@NonNull String name, Date date, int iso, double aperture, String exposureTime, int width, int height) {
+        this.name = name;
+        this.date = date;
+        this.aperture = aperture;
+        this.exposure = exposureTime;
+        this.width = width;
+        this.height = height;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,21 +27,24 @@ public class Photo {
     private Long id;
 
     @NonNull
-    @Column(name = "url", nullable = false)
-    private String url;
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    @Column(name = "date_taken")
+    private Date date;
 
     @Column(name = "ISO")
-    private String iso;
+    private int iso;
 
     @Column(name = "aperture")
-    private String aperture;
+    private double aperture;
 
-    @Column(name = "shutter_speed")
-    private String shutterSpeed;
+    @Column(name = "exposure")
+    private String exposure;
 
     @Column(name = "width")
-    private float width;
+    private int width;
 
     @Column(name = "height")
-    private float height;
+    private int height;
 }

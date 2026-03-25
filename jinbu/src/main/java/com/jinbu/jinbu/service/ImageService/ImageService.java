@@ -1,4 +1,4 @@
-package com.jinbu.jinbu.service;
+package com.jinbu.jinbu.service.ImageService;
 
 import org.springframework.web.multipart.MultipartFile;
 
