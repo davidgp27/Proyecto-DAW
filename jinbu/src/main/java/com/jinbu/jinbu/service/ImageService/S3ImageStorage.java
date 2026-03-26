@@ -2,6 +2,7 @@ package com.jinbu.jinbu.service.ImageService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.core.ResponseBytes;
@@ -13,8 +14,8 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 import java.io.IOException;
 
-@Service
-public class S3ImageStorage implements ImageService {
+@Component
+public class    S3ImageStorage {
 
     @Autowired
     private S3Client s3Client;
@@ -22,13 +23,13 @@ public class S3ImageStorage implements ImageService {
     @Value("${aws.bucket.name}")
     private String bucketName;
 
-    @Override
-    public void store(MultipartFile file, String name) throws IOException {
+    public void store(MultipartFile file, Long id) throws IOException {
         s3Client.putObject(PutObjectRequest.builder()
                 .bucket(bucketName)
-                .key(file.getOriginalFilename())
+                .key(id.toString())
                 .build(),
-                RequestBody.fromBytes(file.getBytes()));
+                // Usamos inputStream para ir pasando el file poco a poco (al contrario que con fromBytes)
+                RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
     }
 
     public byte[] download(String key) {

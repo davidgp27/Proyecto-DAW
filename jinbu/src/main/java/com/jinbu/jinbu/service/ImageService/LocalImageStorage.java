@@ -8,6 +8,7 @@ import com.drew.metadata.exif.ExifSubIFDDirectory;
 import com.jinbu.jinbu.entities.Photo;
 import com.jinbu.jinbu.repository.PhotoRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,23 +21,12 @@ import java.nio.file.StandardCopyOption;
 import java.util.Date;
 
 @AllArgsConstructor
-@Service
-public class LocalImageStorage implements ImageService {
+@Component
+public class LocalImageStorage {
 
     PhotoRepository photoRepository;
 
-    private final Path folder = Paths.get("local-images");
-
-
-
-    public void store(MultipartFile file, String name) throws IOException {
-        Path destination = folder.resolve(name);
-        try (InputStream stream = file.getInputStream()) {
-            Files.copy(stream, destination, StandardCopyOption.REPLACE_EXISTING);
-        }
-    }
-
-    public void storeMetadata(MultipartFile file, String name) throws IOException {
+    public Long storeMetadata(MultipartFile file) throws IOException {
         try {
             Metadata metadata = ImageMetadataReader.readMetadata(file.getInputStream());
 
@@ -49,10 +39,11 @@ public class LocalImageStorage implements ImageService {
             int width = exifDirectory.getInt(ExifSubIFDDirectory.TAG_EXIF_IMAGE_WIDTH);
             int height = exifDirectory.getInt(ExifSubIFDDirectory.TAG_EXIF_IMAGE_HEIGHT);
 
-            Photo photo = new Photo(name, date, iso, aperture, exposureTime, width, height);
+            Photo photo = new Photo(file.getOriginalFilename(), date, iso, aperture, exposureTime, width, height);
 
+            return photo.getId();
 
-
+            // Add custom exceptions
         } catch (ImageProcessingException e) {
             System.err.println("Error de formato de imagen: " + e.getMessage());
         } catch (IOException e) {
@@ -60,6 +51,9 @@ public class LocalImageStorage implements ImageService {
         } catch (MetadataException e) {
             throw new RuntimeException(e);
         }
+        // Create constant for object not found
+        return -1L;
     }
+
 
 }

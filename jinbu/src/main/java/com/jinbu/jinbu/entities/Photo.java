@@ -2,6 +2,7 @@ package com.jinbu.jinbu.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Date;
 
@@ -26,8 +27,9 @@ public class Photo {
     @Column(name = "id")
     private Long id;
 
-    @NonNull
-    @Column(name = "name", nullable = false)
+
+
+    @Column(name = "name")
     private String name;
 
     @Column(name = "date_taken")
@@ -47,4 +49,11 @@ public class Photo {
 
     @Column(name = "height")
     private int height;
+
+    @Value("${aws.s3.url-base}")
+    private String s3BaseUrl;
+
+    public String getFullUrl() {
+        return s3BaseUrl + this.getId();
+    }
 }

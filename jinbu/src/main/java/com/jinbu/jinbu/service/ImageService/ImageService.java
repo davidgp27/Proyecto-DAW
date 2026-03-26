@@ -6,5 +6,7 @@ import java.io.IOException;
 
 public interface ImageService {
 
-    void store(MultipartFile file, String name) throws IOException;
+    void store(MultipartFile file) throws IOException;
+
+    String retrieveImageUrl(Long id);
 }
