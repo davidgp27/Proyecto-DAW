@@ -10,6 +10,7 @@ import com.jinbu.jinbu.repository.PhotoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -28,6 +29,8 @@ public class LocalImageStorage {
 
     public Long storeMetadata(MultipartFile file) throws IOException {
         try {
+            String extension = StringUtils.getFilenameExtension(file.getOriginalFilename());
+
             Metadata metadata = ImageMetadataReader.readMetadata(file.getInputStream());
 
             ExifSubIFDDirectory exifDirectory = metadata.getFirstDirectoryOfType(ExifSubIFDDirectory.class);
@@ -39,7 +42,7 @@ public class LocalImageStorage {
             int width = exifDirectory.getInt(ExifSubIFDDirectory.TAG_EXIF_IMAGE_WIDTH);
             int height = exifDirectory.getInt(ExifSubIFDDirectory.TAG_EXIF_IMAGE_HEIGHT);
 
-            Photo photo = new Photo(file.getOriginalFilename(), date, iso, aperture, exposureTime, width, height);
+            Photo photo = new Photo(file.getOriginalFilename(), date, iso, aperture, exposureTime, width, height, extension);
 
             return photo.getId();
 

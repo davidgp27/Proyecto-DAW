@@ -13,13 +13,14 @@ import java.util.Date;
 @Table(name = "photos")
 public class Photo {
 
-    public Photo(@NonNull String name, Date date, int iso, double aperture, String exposureTime, int width, int height) {
+    public Photo(@NonNull String name, Date date, int iso, double aperture, String exposureTime, int width, int height, String extension) {
         this.name = name;
         this.date = date;
         this.aperture = aperture;
         this.exposure = exposureTime;
         this.width = width;
         this.height = height;
+        this.extension = extension;
     }
 
     @Id
@@ -50,10 +51,13 @@ public class Photo {
     @Column(name = "height")
     private int height;
 
+    @Column(name = "extension")
+    private String extension;
+
     @Value("${aws.s3.url-base}")
     private String s3BaseUrl;
 
     public String getFullUrl() {
-        return s3BaseUrl + this.getId();
+        return s3BaseUrl + this.getId() + this.getExtension();
     }
 }
