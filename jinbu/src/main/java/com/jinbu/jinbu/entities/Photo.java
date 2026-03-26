@@ -54,10 +54,9 @@ public class Photo {
     @Column(name = "extension")
     private String extension;
 
-    @Value("${aws.s3.url-base}")
-    private String s3BaseUrl;
 
+    // Cambiar valor hardcodeado
     public String getFullUrl() {
-        return s3BaseUrl + this.getId() + this.getExtension();
+        return "https://jinbu-s3-bucket.s3.us-east-1.amazonaws.com/" + this.getId() + this.getExtension();
     }
 }
