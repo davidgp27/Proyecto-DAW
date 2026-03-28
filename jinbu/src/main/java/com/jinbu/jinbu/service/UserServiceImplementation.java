@@ -26,6 +26,11 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
+    public User getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    @Override
     public UserDTO saveUser(User user) {
         return userMapper.toDTO(userRepository.save(user));
     }

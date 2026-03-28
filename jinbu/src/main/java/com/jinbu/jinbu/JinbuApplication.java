@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @AllArgsConstructor
 @SpringBootApplication
@@ -23,5 +25,10 @@ public class JinbuApplication implements CommandLineRunner {
 				new User("pep", "sui", "pep@gmail.com"),
 				new User("test", "sui", "test@gmail.com")
 		};
+	}
+
+	@Bean
+	public BCryptPasswordEncoder bCryptPasswordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
 }
