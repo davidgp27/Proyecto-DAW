@@ -26,4 +26,6 @@ public class ImageController {
         imageServiceImplementation.store(file);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    // Get Mapping para pedir la url
 }
