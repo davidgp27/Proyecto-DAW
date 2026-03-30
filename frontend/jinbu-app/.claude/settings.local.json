@@ -1,7 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(find 'c:\\\\Users\\\\dagar\\\\Desktop\\\\2 curso\\\\jibu\\\\jinbu-app-completo\\\\jinbu-app\\\\src' -type f -name *.jsx -o -name *.js)"
-    ]
-  }
-}
